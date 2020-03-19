@@ -23,8 +23,9 @@ int main(int argc, char** argv)
 		string page = fetcher.fetchPage(url);
 
 		auto links = extractLinks(page);
+		makeAllLinksAbsolute(links, url);
+
 		for (string& link : links) {
-			makeLinkAbsolute(link, url);
 			cout << "Found link '" << link << "'" << endl;
 		}
 	} else {

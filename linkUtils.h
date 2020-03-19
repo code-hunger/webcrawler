@@ -64,6 +64,14 @@ void makeLinkAbsolute(std::string& link, const std::string& url)
 	}
 }
 
+void makeAllLinksAbsolute(std::vector<std::string>& links,
+                          const std::string& url)
+{
+	for (std::string& link : links) {
+		makeLinkAbsolute(link, url);
+	}
+}
+
 std::vector<std::string> extractLinks(std::string webPage)
 {
 	std::vector<std::string> links;
