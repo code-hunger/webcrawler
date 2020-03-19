@@ -1,23 +1,10 @@
-#include <cstring> // strncmp
 #include <iostream>
 #include <string>
 
 #include "PageFetcher.h"
+#include "linkUtils.h"
 
 using namespace std;
-
-bool isUrlLike(char* str)
-{
-	constexpr int minUrlLen = 11; // Len of "http://ab.cd"
-
-	for (int i = 0; i < minUrlLen; ++i)
-		if (str[i] == 0) return false;
-
-	if (strncmp(str, "http", 4) != 0) return false;
-
-	return (str[4] == 's') ? strncmp(&str[5], "://", 3) == 0
-	                       : strncmp(&str[4], "://", 3) == 0;
-}
 
 int main(int argc, char** argv)
 {
@@ -30,10 +17,17 @@ int main(int argc, char** argv)
 	if (argc == 2 && isUrlLike(argv[1])) {
 		cout << "Will scan page" << endl;
 
+		string url = argv[1];
+
 		PageFetcher fetcher;
-		cout << fetcher.fetchPage(argv[1]);
-	}
-	else {
+		string page = fetcher.fetchPage(url);
+
+		auto links = extractLinks(page);
+		for (string& link : links) {
+			makeLinkAbsolute(link, url);
+			cout << "Found link '" << link << "'" << endl;
+		}
+	} else {
 		cout << "Will lookup words" << endl;
 	}
 
