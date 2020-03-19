@@ -72,11 +72,17 @@ void makeAllLinksAbsolute(std::vector<std::string>& links,
 	}
 }
 
+size_t findBodyStart(const std::string& webPage)
+{
+	return webPage.find('>', webPage.find("<body")) +
+	       1; // Add 'one' to exclude the '>' char
+}
+
 std::vector<std::string> extractLinks(std::string webPage)
 {
 	std::vector<std::string> links;
 
-	size_t bodyStart = webPage.find('>', webPage.find("<body"));
+	size_t bodyStart = findBodyStart(webPage);
 	size_t pageSize = webPage.size();
 
 	size_t i = bodyStart;
