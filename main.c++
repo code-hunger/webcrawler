@@ -3,6 +3,7 @@
 
 #include "PageFetcher.h"
 #include "linkUtils.h"
+#include "wordExtractor.h"
 
 using namespace std;
 
@@ -25,9 +26,7 @@ int main(int argc, char** argv)
 		auto links = extractLinks(page);
 		makeAllLinksAbsolute(links, url);
 
-		for (string& link : links) {
-			cout << "Found link '" << link << "'" << endl;
-		}
+		auto words = extractWords(page);
 	} else {
 		cout << "Will lookup words" << endl;
 	}
